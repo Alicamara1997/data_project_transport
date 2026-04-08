@@ -12,6 +12,7 @@ from plotly.subplots import make_subplots
 from datetime import datetime, timedelta
 import pytz
 import time
+from streamlit_autorefresh import st_autorefresh
 
 # ── Imports internes ──────────────────────────────────────────────────────────
 from src.data.lines_reference import (
@@ -459,11 +460,7 @@ with st.sidebar:
 # AUTO REFRESH
 # ══════════════════════════════════════════════════════════════════════════════
 if auto_refresh:
-    if "last_refresh" not in st.session_state:
-        st.session_state.last_refresh = time.time()
-    if time.time() - st.session_state.last_refresh > 10:
-        st.session_state.last_refresh = time.time()
-        st.rerun()
+    st_autorefresh(interval=10000, limit=None, key="data_refresh")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
