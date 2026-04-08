@@ -1,0 +1,13 @@
+# Environnement virtuel
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Variables d'environnement
+.env
+
+# Dossier système (Mac/Windows)
+.DS_Store
+Thumbs.db
