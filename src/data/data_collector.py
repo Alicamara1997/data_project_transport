@@ -19,10 +19,7 @@ STATUS_NORMAL = "normal"
 STATUS_DISRUPTED = "disrupted"
 STATUS_INTERRUPTED = "interrupted"
 
-# Cache en mémoire (TTL 30 secondes)
-_cache: Dict[str, Any] = {}
-_cache_ts: Dict[str, float] = {}
-CACHE_TTL = 30  # secondes
+# (Cache interne supprimé au profit de st.cache_data de Streamlit pour le multi-threading)
 
 
 def _is_peak_hour(dt: datetime = None) -> bool:
@@ -204,10 +201,6 @@ client = PRIMClient()
 
 def get_all_lines_status() -> List[Dict]:
     """Retourne le statut temps réel (ou simulé) de toutes les lignes IDF."""
-    cache_key = "all_lines_status"
-    if cache_key in _cache and (time.time() - _cache_ts.get(cache_key, 0)) < CACHE_TTL:
-        return _cache[cache_key]
-
     now = datetime.now(PARIS_TZ)
     results = []
 
@@ -219,8 +212,6 @@ def get_all_lines_status() -> List[Dict]:
             status = _simulate_line_status(line_key, now)
         results.append(status)
 
-    _cache[cache_key] = results
-    _cache_ts[cache_key] = time.time()
     return results
 
 
@@ -240,10 +231,6 @@ def get_next_passages(line_key: str, stop_name: str, n: int = 6) -> List[Dict]:
     if status_info.get("status") == STATUS_INTERRUPTED:
         return []
 
-    cache_key = f"passages_{line_key}_{stop_name}"
-    if cache_key in _cache and (time.time() - _cache_ts.get(cache_key, 0)) < CACHE_TTL:
-        return _cache[cache_key]
-
     if client.is_simulation():
         results = _simulate_next_passages(line_key, stop_name, n)
     else:
@@ -253,22 +240,13 @@ def get_next_passages(line_key: str, stop_name: str, n: int = 6) -> List[Dict]:
         else:
             results = _simulate_next_passages(line_key, stop_name, n)
 
-    _cache[cache_key] = results
-    _cache_ts[cache_key] = time.time()
     return results
 
 
 def get_traffic_alerts() -> List[Dict]:
     """Retourne les alertes trafic actives (simulées ou réelles)."""
-    cache_key = "traffic_alerts"
-    if cache_key in _cache and (time.time() - _cache_ts.get(cache_key, 0)) < CACHE_TTL:
-        return _cache[cache_key]
-
     all_status = get_all_lines_status()
     alerts = [s for s in all_status if s["status"] != STATUS_NORMAL]
-
-    _cache[cache_key] = alerts
-    _cache_ts[cache_key] = time.time()
     return alerts
 
 

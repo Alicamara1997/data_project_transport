@@ -534,6 +534,18 @@ def load_stats():
 def load_alerts():
     return get_traffic_alerts()
 
+@st.cache_data(ttl=15, show_spinner=False)
+def load_passages(line_key: str, stop_name: str, n: int = 6):
+    return get_next_passages(line_key, stop_name, n)
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_day_profile(transport_type: str, freq_peak: int, freq_offpeak: int, date_obj):
+    return predict_day_profile(transport_type, freq_peak, freq_offpeak, date_obj)
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_week_heatmap(transport_type: str):
+    return predict_week_heatmap(transport_type)
+
 all_status = load_all_status()
 stats = load_stats()
 alerts = load_alerts()
@@ -688,7 +700,7 @@ elif page == "⏱️\nPassages":
     """, unsafe_allow_html=True)
 
     # ── Passages ──
-    passages = get_next_passages(line_key, stop_name, n=6)
+    passages = load_passages(line_key, stop_name, n=6)
 
     col_pass, col_gauge = st.columns([3, 1])
 
@@ -814,7 +826,7 @@ elif page == "📉\nPrédire":
 
     # ── Profil journalier ──
     st.markdown('<div class="section-header">📈 Profil de congestion sur la journée</div>', unsafe_allow_html=True)
-    day_df = predict_day_profile(t_type, l_info["frequency_peak"], l_info["frequency_offpeak"], pred_datetime)
+    day_df = load_day_profile(t_type, l_info["frequency_peak"], l_info["frequency_offpeak"], pred_datetime)
     st.plotly_chart(build_day_profile_chart(day_df, l_color), use_container_width=True)
 
     # ── Tableau détaillé ──
@@ -827,7 +839,7 @@ elif page == "📉\nPrédire":
     # ── Heatmap semaine ──
     st.markdown('<div class="section-header">🗓️ Heatmap — Congestion semaine complète</div>', unsafe_allow_html=True)
     with st.spinner("Calcul de la heatmap..."):
-        heatmap_df = predict_week_heatmap(t_type)
+        heatmap_df = load_week_heatmap(t_type)
     st.plotly_chart(build_heatmap(heatmap_df), use_container_width=True)
 
     # ── Comparaison types de transport ──
