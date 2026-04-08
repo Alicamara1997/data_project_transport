@@ -55,24 +55,24 @@ html, body, [class*="css"] {
 
 /* ── Background principal ── */
 .stApp {
-    background: #f8fafc;
-    color: #0f172a;
+    background: #0f172a;
+    color: #f8fafc;
 }
 
 /* ── Cartes métriques ── */
 .metric-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    background: #1e293b;
+    border: 1px solid #334155;
     border-radius: 16px;
     padding: 1.2rem 1.4rem;
     text-align: center;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 .metric-card:hover {
-    border-color: #cbd5e1;
+    border-color: #475569;
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
 }
 .metric-value {
     font-size: 2.2rem;
@@ -82,7 +82,7 @@ html, body, [class*="css"] {
 }
 .metric-label {
     font-size: 0.75rem;
-    color: #475569;
+    color: #94a3b8;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -90,14 +90,14 @@ html, body, [class*="css"] {
 
 /* ── Cartes ligne ── */
 .line-card {
-    background: #ffffff;
+    background: #1e293b;
     border-radius: 12px;
     padding: 0.9rem 1rem;
     margin-bottom: 0.5rem;
-    border: 1px solid #f1f5f9;
+    border: 1px solid #334155;
     border-left: 4px solid #6366f1;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgb(0 0 0 / 0.05);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
 }
 .line-badge {
     display: inline-block;
@@ -111,15 +111,15 @@ html, body, [class*="css"] {
 
 /* ── Passages ── */
 .passage-row {
-    background: #ffffff;
+    background: #1e293b;
     border-radius: 12px;
     padding: 0.8rem 1rem;
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
     gap: 12px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 0.02);
+    border: 1px solid #334155;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
 }
 .wait-time {
     font-size: 1.5rem;
@@ -134,17 +134,17 @@ html, body, [class*="css"] {
     padding: 0.9rem 1.1rem;
     margin-bottom: 0.6rem;
     border-left: 4px solid;
-    background: #ffffff;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 0.05);
+    background: #1e293b;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
 }
-.alert-disrupted  { border-color: #f59e0b; }
-.alert-interrupted{ border-color: #ef4444; }
+.alert-disrupted  { border-color: #f59e0b; background: rgba(245,158,11,0.05); }
+.alert-interrupted{ border-color: #ef4444; background: rgba(239,68,68,0.05); }
 
 /* ── Titre principal ── */
 .hero-title {
     font-size: 2.2rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg, #818cf8, #a78bfa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -152,7 +152,7 @@ html, body, [class*="css"] {
     text-align: center;
 }
 .hero-sub {
-    color: #64748b;
+    color: #94a3b8;
     font-size: 0.9rem;
     margin-top: 4px;
     text-align: center;
@@ -162,7 +162,7 @@ html, body, [class*="css"] {
 .section-header {
     font-size: 1rem;
     font-weight: 700;
-    color: #334155;
+    color: #e2e8f0;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-top: 1rem;
@@ -173,35 +173,35 @@ html, body, [class*="css"] {
 }
 .section-header::before {
     content: ''; display: block; width: 4px; height: 16px;
-    background: #6366f1; border-radius: 4px;
+    background: #818cf8; border-radius: 4px;
 }
 
 /* ── Tabs ── */
 .stTabs [data-baseweb="tab-list"] {
-    background: #ffffff;
+    background: #1e293b;
     border-radius: 12px;
     padding: 4px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 0.02);
+    border: 1px solid #334155;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
 }
 .stTabs [data-baseweb="tab"] {
     border-radius: 9px !important;
-    color: #64748b !important;
+    color: #94a3b8 !important;
     font-weight: 600;
 }
 .stTabs [aria-selected="true"] {
-    background: #f1f5f9 !important;
-    color: #0f172a !important;
+    background: #334155 !important;
+    color: #f8fafc !important;
 }
 
 /* ── Mode simulation banner ── */
 .sim-banner {
-    background: #ede9fe;
-    border: 1px solid #ddd6fe;
+    background: rgba(139,92,246,0.1);
+    border: 1px solid rgba(167,139,250,0.2);
     border-radius: 10px;
     padding: 0.6rem 1rem;
     font-size: 0.85rem;
-    color: #5b21b6;
+    color: #c4b5fd;
     margin-bottom: 1rem;
     text-align: center;
     font-weight: 500;
@@ -228,15 +228,15 @@ div[role="radiogroup"] {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background: #ffffff;
+    background: #0f172a; /* Dark Slate bottom bar */
     padding: 10px 0 20px 0;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     z-index: 99999;
-    border-top: 1px solid #e2e8f0;
-    box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+    border-top: 1px solid #1e293b;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
     gap: 0 !important;
 }
 div[role="radiogroup"] > label {
@@ -302,7 +302,7 @@ def build_congestion_gauge(value: float, title: str = "Congestion") -> go.Figure
         title={"text": title, "font": {"size": 13, "color": "#94a3b8", "family": "Inter"}},
         gauge={
             "axis": {"range": [0, 100], "tickwidth": 1, "tickcolor": "#94a3b8",
-                     "tickfont": {"color": "#475569", "size": 10}},
+                     "tickfont": {"color": "#94a3b8", "size": 10}},
             "bar": {"color": color, "thickness": 0.25},
             "bgcolor": "rgba(0,0,0,0)",
             "borderwidth": 0,
@@ -342,9 +342,9 @@ def build_passage_timeline(passages: list, line_color: str) -> go.Figure:
     ))
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showgrid=False, zeroline=False, color="#475569",
+        xaxis=dict(showgrid=False, zeroline=False, color="#94a3b8",
                    title=dict(text="Minutes avant passage", font=dict(size=11))),
-        yaxis=dict(showgrid=False, color="#94a3b8"),
+        yaxis=dict(showgrid=False, color="#cbd5e1"),
         margin=dict(t=10, b=30, l=10, r=60),
         height=max(160, len(passages) * 45),
         showlegend=False, font=dict(family="Inter")
@@ -387,9 +387,9 @@ def build_day_profile_chart(df: pd.DataFrame, line_color: str) -> go.Figure:
     fig.add_hrect(y0=60, y1=85, fillcolor="rgba(249,115,22,0.06)", line_width=0)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showgrid=False, color="#475569", tickfont=dict(size=10)),
-        yaxis=dict(showgrid=True, gridcolor="rgba(71,85,105,0.2)",
-                   color="#475569", range=[0, 105], ticksuffix="%",
+        xaxis=dict(showgrid=False, color="#94a3b8", tickfont=dict(size=10)),
+        yaxis=dict(showgrid=True, gridcolor="rgba(148,163,184,0.1)",
+                   color="#94a3b8", range=[0, 105], ticksuffix="%",
                    tickfont=dict(size=10)),
         margin=dict(t=10, b=35, l=10, r=10), height=220,
         showlegend=False, font=dict(family="Inter")
@@ -403,7 +403,7 @@ def build_heatmap(df: pd.DataFrame) -> go.Figure:
     pivot = pivot.reindex([d for d in days_order if d in pivot.index])
     fig = px.imshow(
         pivot,
-        color_continuous_scale=[[0,"#f1f5f9"],[0.3,"#22c55e"],[0.6,"#f59e0b"],
+        color_continuous_scale=[[0,"#0f172a"],[0.3,"#22c55e"],[0.6,"#f59e0b"],
                                   [0.85,"#f97316"],[1,"#ef4444"]],
         aspect="auto",
         zmin=0, zmax=100,
@@ -415,10 +415,10 @@ def build_heatmap(df: pd.DataFrame) -> go.Figure:
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         coloraxis_colorbar=dict(title="", ticksuffix="%",
-                                tickfont=dict(color="#475569", size=10),
+                                tickfont=dict(color="#94a3b8", size=10),
                                 thickness=12, len=0.8),
-        xaxis=dict(tickfont=dict(size=9, color="#475569"), showgrid=False),
-        yaxis=dict(tickfont=dict(size=10, color="#475569"), showgrid=False),
+        xaxis=dict(tickfont=dict(size=9, color="#94a3b8"), showgrid=False),
+        yaxis=dict(tickfont=dict(size=10, color="#cbd5e1"), showgrid=False),
         margin=dict(t=10, b=20, l=10, r=10), height=240,
         font=dict(family="Inter")
     )
