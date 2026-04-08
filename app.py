@@ -38,8 +38,7 @@ PARIS_TZ = pytz.timezone("Europe/Paris")
 st.set_page_config(
     page_title="IDF Transit — Tableau de Bord Trafic",
     page_icon="🚇",
-    layout="wide",
-    initial_sidebar_state="expanded",
+    layout="centered",
 )
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -55,60 +54,49 @@ html, body, [class*="css"] {
 
 /* ── Background principal ── */
 .stApp {
-    background: linear-gradient(135deg, #0a0e1a 0%, #0f172a 50%, #0a1628 100%);
-    color: #e2e8f0;
+    background: #f8fafc;
+    color: #0f172a;
 }
-
-/* ── Sidebar ── */
-[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
-    border-right: 1px solid rgba(99,102,241,0.2);
-}
-[data-testid="stSidebar"] .stMarkdown { color: #94a3b8; }
 
 /* ── Cartes métriques ── */
 .metric-card {
-    background: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(15,23,42,0.9));
-    border: 1px solid rgba(99,102,241,0.25);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 16px;
     padding: 1.2rem 1.4rem;
     text-align: center;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
 }
 .metric-card:hover {
-    border-color: rgba(99,102,241,0.5);
+    border-color: #cbd5e1;
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(99,102,241,0.2);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 .metric-value {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     font-weight: 800;
     line-height: 1;
     margin-bottom: 0.3rem;
 }
 .metric-label {
-    font-size: 0.78rem;
-    color: #64748b;
-    font-weight: 500;
+    font-size: 0.75rem;
+    color: #475569;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
 }
 
 /* ── Cartes ligne ── */
 .line-card {
-    background: linear-gradient(135deg, rgba(30,41,59,0.85), rgba(15,23,42,0.85));
+    background: #ffffff;
     border-radius: 12px;
     padding: 0.9rem 1rem;
     margin-bottom: 0.5rem;
+    border: 1px solid #f1f5f9;
     border-left: 4px solid #6366f1;
-    transition: all 0.25s ease;
-    cursor: pointer;
-}
-.line-card:hover {
-    background: rgba(99,102,241,0.12);
-    transform: translateX(4px);
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.05);
 }
 .line-badge {
     display: inline-block;
@@ -122,17 +110,16 @@ html, body, [class*="css"] {
 
 /* ── Passages ── */
 .passage-row {
-    background: rgba(30,41,59,0.6);
-    border-radius: 10px;
-    padding: 0.7rem 1rem;
-    margin-bottom: 0.4rem;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
     gap: 12px;
-    border: 1px solid rgba(99,102,241,0.15);
-    transition: background 0.2s;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.02);
 }
-.passage-row:hover { background: rgba(99,102,241,0.12); }
 .wait-time {
     font-size: 1.5rem;
     font-weight: 800;
@@ -146,87 +133,86 @@ html, body, [class*="css"] {
     padding: 0.9rem 1.1rem;
     margin-bottom: 0.6rem;
     border-left: 4px solid;
-    animation: fadeIn 0.4s ease;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.05);
 }
-.alert-disrupted  { background: rgba(245,158,11,0.12); border-color: #f59e0b; }
-.alert-interrupted{ background: rgba(239,68,68,0.12);  border-color: #ef4444; }
+.alert-disrupted  { border-color: #f59e0b; }
+.alert-interrupted{ border-color: #ef4444; }
 
 /* ── Titre principal ── */
 .hero-title {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin: 0;
+    text-align: center;
 }
 .hero-sub {
-    color: #475569;
-    font-size: 0.95rem;
+    color: #64748b;
+    font-size: 0.9rem;
     margin-top: 4px;
-}
-
-/* ── Status badge ── */
-.status-normal     { color: #22c55e; font-weight: 600; }
-.status-disrupted  { color: #f59e0b; font-weight: 600; }
-.status-interrupted{ color: #ef4444; font-weight: 600; }
-
-/* ── Tabs ── */
-.stTabs [data-baseweb="tab-list"] {
-    background: rgba(15,23,42,0.8);
-    border-radius: 12px;
-    padding: 4px;
-    gap: 2px;
-    border: 1px solid rgba(99,102,241,0.2);
-}
-.stTabs [data-baseweb="tab"] {
-    border-radius: 9px !important;
-    color: #64748b !important;
-    font-weight: 500;
-    padding: 0.4rem 1rem;
-}
-.stTabs [aria-selected="true"] {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
-    color: white !important;
-}
-
-/* ── Selectbox ── */
-[data-testid="stSelectbox"] > div > div {
-    background: rgba(30,41,59,0.8) !important;
-    border: 1px solid rgba(99,102,241,0.3) !important;
-    border-radius: 10px !important;
-    color: #e2e8f0 !important;
+    text-align: center;
 }
 
 /* ── Section headers ── */
 .section-header {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: #c7d2fe;
+    color: #334155;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
+    margin-top: 1rem;
     margin-bottom: 0.8rem;
     display: flex;
     align-items: center;
     gap: 8px;
 }
+.section-header::before {
+    content: ''; display: block; width: 4px; height: 16px;
+    background: #6366f1; border-radius: 4px;
+}
+
+/* ── Tabs ── */
+.stTabs [data-baseweb="tab-list"] {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 4px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.02);
+}
+.stTabs [data-baseweb="tab"] {
+    border-radius: 9px !important;
+    color: #64748b !important;
+    font-weight: 600;
+}
+.stTabs [aria-selected="true"] {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+}
 
 /* ── Mode simulation banner ── */
 .sim-banner {
-    background: linear-gradient(90deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1));
-    border: 1px solid rgba(99,102,241,0.35);
+    background: #ede9fe;
+    border: 1px solid #ddd6fe;
     border-radius: 10px;
-    padding: 0.5rem 1rem;
-    font-size: 0.82rem;
-    color: #a5b4fc;
-    margin-bottom: 0.5rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    color: #5b21b6;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 500;
 }
 
-/* ── Animations ── */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; } }
-@keyframes pulse { 0%,100%{ opacity:1; } 50%{ opacity:0.5; } }
-.pulse { animation: pulse 2s infinite; }
+/* ── Masquer le header app default ── */
+header[data-testid="stHeader"] {
+    display: none;
+}
+[data-testid="stSidebarCollapsedControl"] {
+    display: none;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -258,8 +244,8 @@ def build_congestion_gauge(value: float, title: str = "Congestion") -> go.Figure
         number={"suffix": "%", "font": {"size": 28, "color": color, "family": "Inter"}},
         title={"text": title, "font": {"size": 13, "color": "#94a3b8", "family": "Inter"}},
         gauge={
-            "axis": {"range": [0, 100], "tickwidth": 1, "tickcolor": "#334155",
-                     "tickfont": {"color": "#64748b", "size": 10}},
+            "axis": {"range": [0, 100], "tickwidth": 1, "tickcolor": "#94a3b8",
+                     "tickfont": {"color": "#475569", "size": 10}},
             "bar": {"color": color, "thickness": 0.25},
             "bgcolor": "rgba(0,0,0,0)",
             "borderwidth": 0,
@@ -360,7 +346,7 @@ def build_heatmap(df: pd.DataFrame) -> go.Figure:
     pivot = pivot.reindex([d for d in days_order if d in pivot.index])
     fig = px.imshow(
         pivot,
-        color_continuous_scale=[[0,"#0f172a"],[0.3,"#22c55e"],[0.6,"#f59e0b"],
+        color_continuous_scale=[[0,"#f1f5f9"],[0.3,"#22c55e"],[0.6,"#f59e0b"],
                                   [0.85,"#f97316"],[1,"#ef4444"]],
         aspect="auto",
         zmin=0, zmax=100,
@@ -372,10 +358,10 @@ def build_heatmap(df: pd.DataFrame) -> go.Figure:
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         coloraxis_colorbar=dict(title="", ticksuffix="%",
-                                tickfont=dict(color="#94a3b8", size=10),
+                                tickfont=dict(color="#475569", size=10),
                                 thickness=12, len=0.8),
-        xaxis=dict(tickfont=dict(size=9, color="#64748b"), showgrid=False),
-        yaxis=dict(tickfont=dict(size=10, color="#94a3b8"), showgrid=False),
+        xaxis=dict(tickfont=dict(size=9, color="#475569"), showgrid=False),
+        yaxis=dict(tickfont=dict(size=10, color="#475569"), showgrid=False),
         margin=dict(t=10, b=20, l=10, r=10), height=240,
         font=dict(family="Inter")
     )
@@ -401,8 +387,8 @@ def build_network_overview_chart(all_status: list) -> go.Figure:
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         xaxis=dict(showgrid=False, tickangle=-45,
-                   tickfont=dict(size=8, color="#64748b")),
-        yaxis=dict(showgrid=True, gridcolor="rgba(71,85,105,0.15)",
+                   tickfont=dict(size=8, color="#475569")),
+        yaxis=dict(showgrid=True, gridcolor="rgba(148,163,184,0.15)",
                    color="#475569", ticksuffix="%", range=[0, 105],
                    tickfont=dict(size=9)),
         margin=dict(t=10, b=70, l=10, r=10), height=280,
@@ -412,44 +398,39 @@ def build_network_overview_chart(all_status: list) -> go.Figure:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SIDEBAR
+# HEADER & NAVIGATION MOBILE
 # ══════════════════════════════════════════════════════════════════════════════
 
-with st.sidebar:
-    st.markdown("""
-    <div style="text-align:center;padding:1rem 0 0.5rem">
-        <div style="font-size:2.5rem">🚇</div>
-        <div style="font-size:1.1rem;font-weight:800;color:#c7d2fe">IDF Transit</div>
-        <div style="font-size:0.7rem;color:#475569;margin-top:2px">Tableau de Bord Trafic</div>
-    </div>
-    <hr style="border:none;border-top:1px solid rgba(99,102,241,0.2);margin:0.8rem 0">
-    """, unsafe_allow_html=True)
+st.markdown("""
+<div style="text-align:center;padding:1rem 0 0.5rem">
+    <div style="font-size:2.5rem">🚇</div>
+    <div style="font-size:1.5rem;font-weight:800;color:#0f172a">IDF Transit</div>
+    <div style="font-size:0.8rem;color:#64748b;margin-top:2px">Tableau de Bord Trafic</div>
+</div>
+""", unsafe_allow_html=True)
 
-    # Mode simulation
-    stats = get_global_stats()
-    mode_color = "#ef4444" if "SIMULATION" in stats["mode"] else "#22c55e"
-    st.markdown(f"""
-    <div class="sim-banner">
-        <span class="pulse" style="color:{mode_color}">●</span>
-        &nbsp;<strong>{stats['mode']}</strong>
-        <br><span style="color:#475569">Données rafraîchies à {stats['updated_at']}</span>
-    </div>""", unsafe_allow_html=True)
+# Mode simulation banner
+stats = get_global_stats()
+mode_color = "#ef4444" if "SIMULATION" in stats["mode"] else "#22c55e"
+st.markdown(f"""
+<div class="sim-banner">
+    <span class="pulse" style="color:{mode_color}">●</span>
+    &nbsp;<strong>{stats['mode']}</strong>
+    <br><span style="color:#64748b">Actualisé à {stats['updated_at']}</span>
+</div>""", unsafe_allow_html=True)
 
-    st.markdown("### 🗂️ Navigation")
-    page = st.radio(
-        "Choisir une vue",
-        ["🏠 Vue Générale", "🚇 Prochains Passages", "📊 Prédictions ML", "🗺️ Carte du Réseau", "⚠️ Alertes Trafic"],
-        label_visibility="collapsed"
-    )
+page = st.radio(
+    "Navigation",
+    ["🏠 Vue Générale", "🚇 Passages", "📊 ML", "🗺️ Carte", "⚠️ Alertes"],
+    horizontal=True,
+    label_visibility="collapsed"
+)
 
-    st.markdown("---")
-    st.markdown("### ⚙️ Paramètres")
+with st.expander("⚙️ Paramètres & Infos"):
     auto_refresh = st.toggle("Actualisation auto (10s)", value=True)
     show_night = st.toggle("Inclure horaires nuit", value=False)
-
-    st.markdown("---")
     st.markdown("""
-    <div style="font-size:0.72rem;color:#334155;text-align:center;padding:0.5rem 0">
+    <div style="font-size:0.72rem;color:#64748b;text-align:center;padding:0.5rem 0; border-top:1px solid #e2e8f0; margin-top:10px;">
         Source : API IDFM PRIM<br>
         <a href="https://prim.iledefrance-mobilites.fr" style="color:#6366f1" target="_blank">prim.iledefrance-mobilites.fr</a><br><br>
         © 2025 IDF Transit Dashboard
@@ -489,16 +470,10 @@ now = datetime.now(PARIS_TZ)
 # ══════════════════════════════════════════════════════════════════════════════
 if page == "🏠 Vue Générale":
 
-    # ── Header ──
+    st.markdown('<h1 class="hero-title">Vue d\'Ensemble</h1>', unsafe_allow_html=True)
+    st.markdown(f'<p class="hero-sub">Temps réel simulé • {now.strftime("%H:%M:%S")}</p>', unsafe_allow_html=True)
+    
     col_h1, col_h2 = st.columns([3, 1])
-    with col_h1:
-        st.markdown(f"""
-        <h1 class="hero-title">🚇 IDF Transit Dashboard</h1>
-        <p class="hero-sub">
-            Île-de-France • Réseau complet • Mis à jour à {now.strftime('%H:%M:%S')}
-            {'&nbsp;&nbsp;🔴 Heures de pointe' if stats['is_peak'] else ''}
-            {'&nbsp;&nbsp;🟡 Week-end' if stats['is_weekend'] else ''}
-        </p>""", unsafe_allow_html=True)
     with col_h2:
         if st.button("🔄 Actualiser", use_container_width=True):
             st.cache_data.clear()
@@ -552,7 +527,7 @@ if page == "🏠 Vue Générale":
                 with col2:
                     st.markdown(f'<div style="padding:9px 0;font-size:0.88rem">{si} <span style="color:{sc};font-weight:600">{get_status_label(s["status"])}</span></div>', unsafe_allow_html=True)
                 with col3:
-                    st.markdown(f'<div style="padding:9px 0;font-size:0.88rem;color:#94a3b8">⏱ Toutes les <strong style="color:#e2e8f0">{freq} min</strong></div>', unsafe_allow_html=True)
+                    st.markdown(f'<div style="padding:9px 0;font-size:0.88rem;color:#64748b">⏱ Toutes les <strong style="color:#0f172a">{freq} min</strong></div>', unsafe_allow_html=True)
                 with col4:
                     bar_w = max(0, min(100, cong))
                     bar_c = congestion_color(cong)
@@ -576,9 +551,9 @@ if page == "🏠 Vue Générale":
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE : PROCHAINS PASSAGES
 # ══════════════════════════════════════════════════════════════════════════════
-elif page == "🚇 Prochains Passages":
+elif page == "🚇 Passages":
 
-    st.markdown('<h1 class="hero-title">⏱ Prochains Passages</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="hero-title">⏱ Passages</h1>', unsafe_allow_html=True)
     st.markdown(f'<p class="hero-sub">Temps réel simulé • {now.strftime("%A %d %B %Y — %H:%M:%S")}</p>', unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -686,9 +661,9 @@ elif page == "🚇 Prochains Passages":
         <div style="text-align:center;margin-top:-10px">
             <span style="font-size:1.1rem;font-weight:700;color:{cong_c}">{cong_label}</span>
         </div>
-        <div style="margin-top:1rem;background:rgba(30,41,59,0.6);border-radius:10px;padding:0.8rem">
+        <div style="margin-top:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:0.8rem">
             <div style="font-size:0.78rem;color:#64748b;margin-bottom:4px">Fréquence théorique</div>
-            <div style="font-size:0.95rem;font-weight:700;color:#e2e8f0">Toutes les {line_status['theoretical_frequency_min']} min</div>
+            <div style="font-size:0.95rem;font-weight:700;color:#0f172a">Toutes les {line_status['theoretical_frequency_min']} min</div>
             <div style="font-size:0.78rem;color:#64748b;margin-top:8px;margin-bottom:4px">Fréquence actuelle</div>
             <div style="font-size:0.95rem;font-weight:700;color:{cong_c}">Toutes les {line_status['current_frequency_min']} min</div>
         </div>""", unsafe_allow_html=True)
@@ -697,7 +672,7 @@ elif page == "🚇 Prochains Passages":
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE : PRÉDICTIONS ML
 # ══════════════════════════════════════════════════════════════════════════════
-elif page == "📊 Prédictions ML":
+elif page == "📊 ML":
 
     st.markdown('<h1 class="hero-title">🤖 Prédictions ML du Trafic</h1>', unsafe_allow_html=True)
     st.markdown('<p class="hero-sub">Modèle analytique entraîné sur les patterns horaires IDF — vacances, pointes, week-ends</p>', unsafe_allow_html=True)
@@ -810,7 +785,7 @@ elif page == "📊 Prédictions ML":
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE : CARTE DU RÉSEAU
 # ══════════════════════════════════════════════════════════════════════════════
-elif page == "🗺️ Carte du Réseau":
+elif page == "🗺️ Carte":
 
     st.markdown('<h1 class="hero-title">🗺️ Carte du Réseau IDF</h1>', unsafe_allow_html=True)
     st.markdown('<p class="hero-sub">Principales stations — état du trafic en temps réel</p>', unsafe_allow_html=True)
@@ -885,7 +860,7 @@ elif page == "🗺️ Carte du Réseau":
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE : ALERTES TRAFIC
 # ══════════════════════════════════════════════════════════════════════════════
-elif page == "⚠️ Alertes Trafic":
+elif page == "⚠️ Alertes":
 
     st.markdown('<h1 class="hero-title">⚠️ Alertes & Perturbations</h1>', unsafe_allow_html=True)
     st.markdown(f'<p class="hero-sub">Mis à jour à {now.strftime("%H:%M:%S")} • Rafraîchissement automatique toutes les 30s</p>', unsafe_allow_html=True)
@@ -913,7 +888,7 @@ elif page == "⚠️ Alertes Trafic":
     else:
         # ── Interrompues ──
         if interrupted:
-            st.markdown('<div class="section-header" style="color:#fca5a5">🔴 Lignes Interrompues</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-header" style="color:#b91c1c">🔴 Lignes Interrompues</div>', unsafe_allow_html=True)
             for a in interrupted:
                 sc = get_status_color(a["status"])
                 st.markdown(f"""
@@ -922,8 +897,8 @@ elif page == "⚠️ Alertes Trafic":
                         <span style="background:{a['color']};padding:4px 12px;border-radius:8px;
                                      font-weight:800;color:white;font-size:0.85rem">{a['line_name'].split()[-1]}</span>
                         <div>
-                            <div style="font-size:0.92rem;font-weight:700;color:#fca5a5">{a['line_name']}</div>
-                            <div style="font-size:0.8rem;color:#fca5a5;opacity:0.8">{a['message']}</div>
+                            <div style="font-size:0.92rem;font-weight:700;color:#b91c1c">{a['line_name']}</div>
+                            <div style="font-size:0.8rem;color:#ef4444;opacity:0.9">{a['message']}</div>
                         </div>
                         <div style="margin-left:auto;text-align:right">
                             <div style="font-size:0.78rem;color:#ef4444">Congestion : {a['congestion_pct']:.0f}%</div>
@@ -934,7 +909,7 @@ elif page == "⚠️ Alertes Trafic":
 
         # ── Perturbées ──
         if disrupted:
-            st.markdown('<div class="section-header" style="color:#fcd34d;margin-top:1rem">⚠️ Lignes Perturbées</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-header" style="color:#b45309;margin-top:1rem">⚠️ Lignes Perturbées</div>', unsafe_allow_html=True)
             for a in disrupted:
                 st.markdown(f"""
                 <div class="alert-card alert-disrupted">
@@ -942,8 +917,8 @@ elif page == "⚠️ Alertes Trafic":
                         <span style="background:{a['color']};padding:4px 12px;border-radius:8px;
                                      font-weight:800;color:white;font-size:0.85rem">{a['line_name'].split()[-1]}</span>
                         <div>
-                            <div style="font-size:0.92rem;font-weight:700;color:#fcd34d">{a['line_name']}</div>
-                            <div style="font-size:0.8rem;color:#fcd34d;opacity:0.8">{a['message']}</div>
+                            <div style="font-size:0.92rem;font-weight:700;color:#b45309">{a['line_name']}</div>
+                            <div style="font-size:0.8rem;color:#b45309;opacity:0.9">{a['message']}</div>
                         </div>
                         <div style="margin-left:auto;text-align:right">
                             <div style="font-size:0.78rem;color:#f59e0b">Congestion : {a['congestion_pct']:.0f}%</div>
