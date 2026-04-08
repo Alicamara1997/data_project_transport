@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 import pytz
 import time
 from streamlit_autorefresh import st_autorefresh
+import streamlit.components.v1 as components
 
 # ── Imports internes ──────────────────────────────────────────────────────────
 from src.data.lines_reference import (
@@ -481,6 +482,15 @@ page = st.radio(
     horizontal=True,
     label_visibility="collapsed"
 )
+
+# ── Remontée automatique en haut de page lors du changement d'onglet ──
+if st.session_state.get('last_page') != page:
+    components.html("""
+        <script>
+            window.parent.scrollTo(0, 0);
+        </script>
+    """, height=0)
+    st.session_state['last_page'] = page
 
 with st.expander("⚙️ Paramètres & Infos"):
     auto_refresh = st.toggle("Actualisation auto (10s)", value=True)
