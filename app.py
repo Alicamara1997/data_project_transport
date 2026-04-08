@@ -485,9 +485,18 @@ page = st.radio(
 
 # ── Remontée automatique en haut de page lors du changement d'onglet ──
 if st.session_state.get('last_page') != page:
-    components.html("""
+    # On ajoute time.time() dans le bloc JS pour forcer Streamlit à recharger l'IFrame
+    components.html(f"""
         <script>
-            window.parent.scrollTo(0, 0);
+            // Execution context: {time.time()}
+            const parent = window.parent;
+            // Native window
+            parent.scrollTo({{top: 0, behavior: 'instant'}});
+            // Streamlit inner containers
+            const viewContainer = parent.document.querySelector('[data-testid="stAppViewContainer"]');
+            if (viewContainer) viewContainer.scrollTo({{top: 0, behavior: 'instant'}});
+            const mainContainer = parent.document.querySelector('.stMain');
+            if (mainContainer) mainContainer.scrollTo({{top: 0, behavior: 'instant'}});
         </script>
     """, height=0)
     st.session_state['last_page'] = page
