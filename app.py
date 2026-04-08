@@ -213,6 +213,62 @@ header[data-testid="stHeader"] {
 [data-testid="stSidebarCollapsedControl"] {
     display: none;
 }
+
+/* ── Espace pour la bottom navigation ── */
+.stApp {
+    padding-bottom: 80px;
+}
+
+/* ── Barre de Navigation Fixée en Bas (Native st.radio Hack) ── */
+div[role="radiogroup"] > label > div:first-child {
+    display: none !important; /* Cache le point radio natif */
+}
+div[role="radiogroup"] {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px 0 20px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999;
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+    gap: 0 !important;
+}
+div[role="radiogroup"] > label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 1;
+    border: none !important;
+}
+div[role="radiogroup"] > label p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.70rem;
+    font-weight: 600;
+    color: #64748b;
+    padding: 6px 12px;
+    border-radius: 16px;
+    transition: all 0.2s ease;
+    margin: 0;
+    white-space: pre-wrap;
+    text-align: center;
+}
+div[role="radiogroup"] > label[aria-checked="true"] p {
+    background: #22c55e;
+    color: white;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -421,7 +477,7 @@ st.markdown(f"""
 
 page = st.radio(
     "Navigation",
-    ["🏠 Vue Générale", "🚇 Passages", "📊 ML", "🗺️ Carte", "⚠️ Alertes"],
+    ["🏠\nAccueil", "⏱️\nPassages", "📉\nPrédire", "🗺️\nCarte", "⚠️\nAlertes"],
     horizontal=True,
     label_visibility="collapsed"
 )
@@ -468,7 +524,7 @@ now = datetime.now(PARIS_TZ)
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE : VUE GÉNÉRALE
 # ══════════════════════════════════════════════════════════════════════════════
-if page == "🏠 Vue Générale":
+if page == "🏠\nAccueil":
 
     st.markdown('<h1 class="hero-title">Vue d\'Ensemble</h1>', unsafe_allow_html=True)
     st.markdown(f'<p class="hero-sub">Temps réel simulé • {now.strftime("%H:%M:%S")}</p>', unsafe_allow_html=True)
@@ -551,7 +607,7 @@ if page == "🏠 Vue Générale":
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE : PROCHAINS PASSAGES
 # ══════════════════════════════════════════════════════════════════════════════
-elif page == "🚇 Passages":
+elif page == "⏱️\nPassages":
 
     st.markdown('<h1 class="hero-title">⏱ Passages</h1>', unsafe_allow_html=True)
     st.markdown(f'<p class="hero-sub">Temps réel simulé • {now.strftime("%A %d %B %Y — %H:%M:%S")}</p>', unsafe_allow_html=True)
@@ -672,7 +728,7 @@ elif page == "🚇 Passages":
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE : PRÉDICTIONS ML
 # ══════════════════════════════════════════════════════════════════════════════
-elif page == "📊 ML":
+elif page == "📉\nPrédire":
 
     st.markdown('<h1 class="hero-title">🤖 Prédictions ML du Trafic</h1>', unsafe_allow_html=True)
     st.markdown('<p class="hero-sub">Modèle analytique entraîné sur les patterns horaires IDF — vacances, pointes, week-ends</p>', unsafe_allow_html=True)
@@ -785,7 +841,7 @@ elif page == "📊 ML":
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE : CARTE DU RÉSEAU
 # ══════════════════════════════════════════════════════════════════════════════
-elif page == "🗺️ Carte":
+elif page == "🗺️\nCarte":
 
     st.markdown('<h1 class="hero-title">🗺️ Carte du Réseau IDF</h1>', unsafe_allow_html=True)
     st.markdown('<p class="hero-sub">Principales stations — état du trafic en temps réel</p>', unsafe_allow_html=True)
@@ -860,7 +916,7 @@ elif page == "🗺️ Carte":
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE : ALERTES TRAFIC
 # ══════════════════════════════════════════════════════════════════════════════
-elif page == "⚠️ Alertes":
+elif page == "⚠️\nAlertes":
 
     st.markdown('<h1 class="hero-title">⚠️ Alertes & Perturbations</h1>', unsafe_allow_html=True)
     st.markdown(f'<p class="hero-sub">Mis à jour à {now.strftime("%H:%M:%S")} • Rafraîchissement automatique toutes les 30s</p>', unsafe_allow_html=True)
