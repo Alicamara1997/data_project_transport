@@ -114,8 +114,29 @@ def _simulate_line_status(line_key: str, dt: datetime = None) -> Dict:
     if dt is None:
         dt = datetime.now(PARIS_TZ)
 
+    line_data = ALL_LINES.get(line_key, {})
+    is_peak = _is_peak_hour(dt)
+    
+    # ── Gestion de la nuit (Fin de service) ──
+    if _is_night(dt) and line_data.get("type") in ["metro", "rer", "tram", "transilien"]:
+        return {
+            "line_key": line_key,
+            "line_name": line_data.get("name", line_key),
+            "type": line_data.get("type", "unknown"),
+            "color": line_data.get("color", "#888888"),
+            "status": STATUS_INTERRUPTED,
+            "message": "Service terminé (Horaires de nuit)",
+            "congestion_pct": 0,
+            "current_frequency_min": 0,
+            "theoretical_frequency_min": 0,
+            "delay_extra_min": 0,
+            "is_peak": False,
+            "terminus": line_data.get("terminus", []),
+            "updated_at": datetime.now(PARIS_TZ).strftime("%H:%M:%S"),
+        }
+
     # Probabilité d'incident selon l'heure
-    incident_prob = 0.04 if _is_peak_hour(dt) else 0.015
+    incident_prob = 0.04 if is_peak else 0.015
     if _is_night(dt):
         incident_prob = 0.01
     if _is_weekend(dt):
@@ -130,7 +151,7 @@ def _simulate_line_status(line_key: str, dt: datetime = None) -> Dict:
             "Colis suspect — interruption temporaire",
         ]
         message = random.choice(messages)
-        delay_extra = random.randint(10, 30)
+        delay_extra = 0
     elif r < incident_prob:
         status = STATUS_DISRUPTED
         messages = [
@@ -152,6 +173,11 @@ def _simulate_line_status(line_key: str, dt: datetime = None) -> Dict:
     base_freq = line_data.get("frequency_peak" if is_peak else "frequency_offpeak", 10)
     congestion = _get_congestion_factor(dt)
 
+    if status == STATUS_INTERRUPTED:
+        congestion_val = 0
+    else:
+        congestion_val = round(min(100, congestion * 100 + delay_extra * 2), 1)
+
     return {
         "line_key": line_key,
         "line_name": line_data.get("name", line_key),
@@ -159,7 +185,7 @@ def _simulate_line_status(line_key: str, dt: datetime = None) -> Dict:
         "color": line_data.get("color", "#888888"),
         "status": status,
         "message": message,
-        "congestion_pct": round(min(100, congestion * 100 + delay_extra * 2), 1),
+        "congestion_pct": congestion_val,
         "current_frequency_min": base_freq + delay_extra,
         "theoretical_frequency_min": base_freq,
         "delay_extra_min": delay_extra,
@@ -209,6 +235,11 @@ def get_line_status(line_key: str) -> Dict:
 
 def get_next_passages(line_key: str, stop_name: str, n: int = 6) -> List[Dict]:
     """Retourne les prochains passages pour une ligne/arrêt."""
+    # ── Vérification prioritaire: ligne interrompue / nuit ──
+    status_info = get_line_status(line_key)
+    if status_info.get("status") == STATUS_INTERRUPTED:
+        return []
+
     cache_key = f"passages_{line_key}_{stop_name}"
     if cache_key in _cache and (time.time() - _cache_ts.get(cache_key, 0)) < CACHE_TTL:
         return _cache[cache_key]

@@ -696,7 +696,10 @@ elif page == "⏱️\nPassages":
         st.markdown(f'<div class="section-header">🚏 Prochains passages — {stop_name}</div>', unsafe_allow_html=True)
 
         if not passages:
-            st.info("Aucun passage prévu dans les prochaines minutes (service réduit ou fin de service).")
+            if line_status["status"] == "interrupted":
+                st.error("🚨 **Service interrompu ou terminé.** Aucun passage prévu pour le moment sur cette ligne.")
+            else:
+                st.info("Aucun passage prévu dans les prochaines minutes.")
         else:
             for p in passages:
                 delay_text = f' <span style="color:#f59e0b;font-size:0.75rem">(+{p["delay_minutes"]} min)</span>' if p["delay_minutes"] > 0 else ''
